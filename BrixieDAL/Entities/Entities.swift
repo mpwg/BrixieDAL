@@ -36,17 +36,8 @@ public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, Tab
 }
 
 // MARK: - Helpers
-fileprivate func boolFromString(_ s: String?) -> Bool? {
-	guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() else { return nil }
-	if ["1","true","t","yes","y"].contains(s) { return true }
-	if ["0","false","f","no","n"].contains(s) { return false }
-	return nil
-}
-
-fileprivate func stringFromBool(_ b: Bool?) -> String? {
-	guard let b = b else { return nil }
-	return b ? "1" : "0"
-}
+// NOTE: We migrate textual boolean-like values in the DB to integers (1/0)
+// and expose Bool? properties in the Swift models below.
 
 // MARK: - Inventory Minifigs
 public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
@@ -77,7 +68,7 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 	public var partNum: String?
 	public var colorId: Int64?
 	public var quantity: Int64?
-	public var isSpare: String?
+	public var isSpare: Bool?
 	public var imgUrl: String?
 
 	enum CodingKeys: String, CodingKey {
@@ -85,7 +76,7 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 		case partNum = "part_num"
 		case colorId = "color_id"
 		case quantity
-		case isSpare = "is_spare"
+	case isSpare = "is_spare"
 		case imgUrl = "img_url"
 	}
 
@@ -96,12 +87,6 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 		static let quantity = Column("quantity")
 		static let isSpare = Column("is_spare")
 		static let imgUrl = Column("img_url")
-	}
-
-	// Swift-native accessors
-	public var isSpareBool: Bool? {
-		get { boolFromString(isSpare) }
-		set { isSpare = stringFromBool(newValue) }
 	}
 
 	public var imgURL: URL? {
@@ -268,7 +253,7 @@ public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRe
 	public var id: Int64?
 	public var name: String?
 	public var rgb: String?
-	public var isTrans: String?
+	public var isTrans: Bool?
 	public var numParts: Int64?
 	public var numSets: Int64?
 	public var y1: Int64?
@@ -300,9 +285,10 @@ public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRe
 		self.id = rowID
 	}
 
+	// direct Bool mapping for the underlying integer DB column
 	public var isTransBool: Bool? {
-		get { boolFromString(isTrans) }
-		set { isTrans = stringFromBool(newValue) }
+		get { isTrans }
+		set { isTrans = newValue }
 	}
 
 	/// Parse rgb like "#RRGGBB" or "RRGGBB" into 3 integer components
@@ -385,5 +371,34 @@ public enum BrixDatabase {
 	/// another path for tests or other environments.
 	public static func openQueue(at path: String = "/Users/mat/code/BrixieDAL/BrixieDAL/db/Brix.sqlite") throws -> DatabaseQueue {
 		return try DatabaseQueue(path: path)
+	}
+
+	/// Migrate textual boolean-like values ("1","0","true","false","yes","no")
+	/// to integer 1/0 in the database for columns that are currently TEXT.
+	/// This is idempotent and safe to run multiple times.
+	public static func migrateBooleanTextColumnsToInt(_ dbQueue: DatabaseQueue) throws {
+		try dbQueue.write { db in
+			// inventory_parts.is_spare -> convert truthy -> 1, falsy -> 0, else NULL
+			try db.execute(sql: """
+				UPDATE inventory_parts
+				SET is_spare = CASE
+					WHEN lower(trim(is_spare)) IN ('1','true','t','yes','y') THEN '1'
+					WHEN lower(trim(is_spare)) IN ('0','false','f','no','n') THEN '0'
+					ELSE NULL
+				END
+				WHERE is_spare IS NOT NULL;
+				""")
+
+			// colors.is_trans -> same conversion
+			try db.execute(sql: """
+				UPDATE colors
+				SET is_trans = CASE
+					WHEN lower(trim(is_trans)) IN ('1','true','t','yes','y') THEN '1'
+					WHEN lower(trim(is_trans)) IN ('0','false','f','no','n') THEN '0'
+					ELSE NULL
+				END
+				WHERE is_trans IS NOT NULL;
+				""")
+		}
 	}
 }
