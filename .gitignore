@@ -66,6 +66,7 @@ fastlane/test_output
 # Add this line if you want to avoid checking in source code from the database
 *.db
 *.sqlite
+!Brix.sqlite
 *.sqlite3
 *.sqlite-shm
 *.sqlite-wal
