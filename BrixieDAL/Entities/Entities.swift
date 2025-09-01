@@ -35,6 +35,19 @@ public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, Tab
 	}
 }
 
+// MARK: - Helpers
+fileprivate func boolFromString(_ s: String?) -> Bool? {
+	guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() else { return nil }
+	if ["1","true","t","yes","y"].contains(s) { return true }
+	if ["0","false","f","no","n"].contains(s) { return false }
+	return nil
+}
+
+fileprivate func stringFromBool(_ b: Bool?) -> String? {
+	guard let b = b else { return nil }
+	return b ? "1" : "0"
+}
+
 // MARK: - Inventory Minifigs
 public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "inventory_minifigs"
@@ -84,6 +97,17 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 		static let isSpare = Column("is_spare")
 		static let imgUrl = Column("img_url")
 	}
+
+	// Swift-native accessors
+	public var isSpareBool: Bool? {
+		get { boolFromString(isSpare) }
+		set { isSpare = stringFromBool(newValue) }
+	}
+
+	public var imgURL: URL? {
+		guard let s = imgUrl, let url = URL(string: s) else { return nil }
+		return url
+	}
 }
 
 // MARK: - Inventory Sets
@@ -128,6 +152,11 @@ public struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord 
 		static let name = Column("name")
 		static let numParts = Column("num_parts")
 		static let imgUrl = Column("img_url")
+	}
+
+	public var imgURL: URL? {
+		guard let s = imgUrl, let url = URL(string: s) else { return nil }
+		return url
 	}
 }
 
@@ -270,6 +299,19 @@ public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRe
 	public mutating func didInsert(with rowID: Int64, for column: String?) {
 		self.id = rowID
 	}
+
+	public var isTransBool: Bool? {
+		get { boolFromString(isTrans) }
+		set { isTrans = stringFromBool(newValue) }
+	}
+
+	/// Parse rgb like "#RRGGBB" or "RRGGBB" into 3 integer components
+	public var rgbComponents: (r: Int, g: Int, b: Int)? {
+		guard let rgb = rgb else { return nil }
+		let hex = rgb.trimmingCharacters(in: CharacterSet(charactersIn: "#")).uppercased()
+		guard hex.count == 6, let val = Int(hex, radix: 16) else { return nil }
+		return ((val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF)
+	}
 }
 
 // MARK: - Sets (named LegoSet to avoid collision with Swift.Set)
@@ -302,6 +344,11 @@ public struct LegoSet: Codable, FetchableRecord, PersistableRecord, TableRecord 
 
 	// Primary key
 	public static var primaryKey: [String] { ["set_num"] }
+
+	public var imgURL: URL? {
+		guard let s = imgUrl, let url = URL(string: s) else { return nil }
+		return url
+	}
 }
 
 // MARK: - Themes
