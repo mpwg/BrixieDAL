@@ -1,6 +1,6 @@
 
 import Foundation
-import GRDB
+internal import GRDB
 
 // Generated GRDB entities for Brix.sqlite
 // Each struct maps to a table in the database and conforms to
@@ -8,7 +8,7 @@ import GRDB
 // with GRDB high-level APIs.
 
 // MARK: - Inventories
-public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
 	public static let databaseTableName = "inventories"
 
 	public var id: Int64?
@@ -20,7 +20,7 @@ public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, Tab
 		case setNum = "set_num"
 	}
 
-	enum Columns {
+    public enum Columns {
 		static let id = Column("id")
 		static let version = Column("version")
 		static let setNum = Column("set_num")
@@ -40,7 +40,7 @@ public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, Tab
 // and expose Bool? properties in the Swift models below.
 
 // MARK: - Inventory Minifigs
-public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "inventory_minifigs"
 
 	public var inventoryId: Int64?
@@ -53,7 +53,7 @@ public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, Tab
 		case quantity
 	}
 
-	enum Columns {
+    public enum Columns {
 		static let inventoryId = Column("inventory_id")
 		static let figNum = Column("fig_num")
 		static let quantity = Column("quantity")
@@ -64,7 +64,7 @@ public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, Tab
 }
 
 // MARK: - Inventory Parts
-public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "inventory_parts"
 
 	public var inventoryId: Int64?
@@ -83,7 +83,7 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 		case imgUrl = "img_url"
 	}
 
-	enum Columns {
+    public enum Columns {
 		static let inventoryId = Column("inventory_id")
 		static let partNum = Column("part_num")
 		static let colorId = Column("color_id")
@@ -102,7 +102,7 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 }
 
 // MARK: - Inventory Sets
-public struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "inventory_sets"
 
 	public var inventoryId: Int64?
@@ -126,7 +126,7 @@ public struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRe
 }
 
 // MARK: - Minifigs
-public struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "minifigs"
 
 	public var figNum: String?
@@ -158,7 +158,7 @@ public struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord 
 }
 
 // MARK: - Part Categories
-public struct PartCategory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+ struct PartCategory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
 	public static let databaseTableName = "part_categories"
 
 	public var id: Int64?
@@ -182,7 +182,7 @@ public struct PartCategory: Codable, FetchableRecord, MutablePersistableRecord, 
 }
 
 // MARK: - Part Relationships
-public struct PartRelationship: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct PartRelationship: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "part_relationships"
 
 	public var relType: String?
@@ -206,7 +206,7 @@ public struct PartRelationship: Codable, FetchableRecord, PersistableRecord, Tab
 }
 
 // MARK: - Parts
-public struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "parts"
 
 	public var partNum: String?
@@ -233,7 +233,7 @@ public struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
 }
 
 // MARK: - Elements
-public struct Element: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+ struct Element: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
 	public static let databaseTableName = "elements"
 
 	public var elementId: Int64?
@@ -265,7 +265,7 @@ public struct Element: Codable, FetchableRecord, MutablePersistableRecord, Table
 }
 
 // MARK: - Colors
-public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+ struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
 	public static let databaseTableName = "colors"
 
 	public var id: Int64?
@@ -319,7 +319,7 @@ public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRe
 }
 
 // MARK: - Sets (named LegoSet to avoid collision with Swift.Set)
-public struct LegoSet: Codable, FetchableRecord, PersistableRecord, TableRecord {
+ struct LegoSet: Codable, FetchableRecord, PersistableRecord, TableRecord {
 	public static let databaseTableName = "sets"
 
 	public var setNum: String?
@@ -356,7 +356,7 @@ public struct LegoSet: Codable, FetchableRecord, PersistableRecord, TableRecord 
 }
 
 // MARK: - Themes
-public struct Theme: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+ struct Theme: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
 	public static let databaseTableName = "themes"
 
 	public var id: Int64?
@@ -383,7 +383,7 @@ public struct Theme: Codable, FetchableRecord, MutablePersistableRecord, TableRe
 }
 
 // MARK: - Database helper
-public enum BrixDatabase {
+ enum BrixDatabase {
 	/// Opens the database at the given path.
 	/// By default this uses the project's db path, but callers can provide
 	/// another path for tests or other environments.
