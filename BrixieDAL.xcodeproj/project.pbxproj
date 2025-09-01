@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4095F7AE2E6563DD008A4284 /* BrixieDAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */; };
-		4095F7C82E656C15008A4284 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 4095F7C72E656C15008A4284 /* SQLite */; };
+		4095F7CB2E656EAA008A4284 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 4095F7CA2E656EAA008A4284 /* GRDB */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4095F7C82E656C15008A4284 /* SQLite in Frameworks */,
+				4095F7CB2E656EAA008A4284 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +108,7 @@
 			);
 			name = BrixieDAL;
 			packageProductDependencies = (
-				4095F7C72E656C15008A4284 /* SQLite */,
+				4095F7CA2E656EAA008A4284 /* GRDB */,
 			);
 			productName = BrixieDAL;
 			productReference = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */;
@@ -165,7 +165,7 @@
 			mainGroup = 4095F79A2E6563DD008A4284;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */,
+				4095F7C92E656EAA008A4284 /* XCRemoteSwiftPackageReference "GRDB" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4095F7A52E6563DD008A4284 /* Products */;
@@ -516,21 +516,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+		4095F7C92E656EAA008A4284 /* XCRemoteSwiftPackageReference "GRDB" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			repositoryURL = "https://github.com/groue/GRDB.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.15.4;
+				minimumVersion = 7.6.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4095F7C72E656C15008A4284 /* SQLite */ = {
+		4095F7CA2E656EAA008A4284 /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */;
-			productName = SQLite;
+			package = 4095F7C92E656EAA008A4284 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
