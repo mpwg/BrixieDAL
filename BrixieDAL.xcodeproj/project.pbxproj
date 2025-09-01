@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4095F7AE2E6563DD008A4284 /* BrixieDAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */; };
-		4095F7BE2E6563F9008A4284 /* Blackbird in Frameworks */ = {isa = PBXBuildFile; productRef = 4095F7BD2E6563F9008A4284 /* Blackbird */; };
+		4095F7C82E656C15008A4284 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 4095F7C72E656C15008A4284 /* SQLite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4095F7BE2E6563F9008A4284 /* Blackbird in Frameworks */,
+				4095F7C82E656C15008A4284 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +108,7 @@
 			);
 			name = BrixieDAL;
 			packageProductDependencies = (
-				4095F7BD2E6563F9008A4284 /* Blackbird */,
+				4095F7C72E656C15008A4284 /* SQLite */,
 			);
 			productName = BrixieDAL;
 			productReference = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */;
@@ -165,7 +165,7 @@
 			mainGroup = 4095F79A2E6563DD008A4284;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */,
+				4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4095F7A52E6563DD008A4284 /* Products */;
@@ -516,21 +516,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */ = {
+		4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/marcoarment/Blackbird";
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4095F7BD2E6563F9008A4284 /* Blackbird */ = {
+		4095F7C72E656C15008A4284 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */;
-			productName = Blackbird;
+			package = 4095F7C62E656C15008A4284 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

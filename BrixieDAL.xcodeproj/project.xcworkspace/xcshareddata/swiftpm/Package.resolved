@@ -1,13 +1,22 @@
 {
-  "originHash" : "14e3f50bee21ad7235b0f3393ab66480eb6ff2b1272404223f3240837aea868d",
+  "originHash" : "42598adf0e546dd7490b40b2fd0f5298dee9c098f71dcdbfcb5cc4c07573f374",
   "pins" : [
     {
-      "identity" : "blackbird",
+      "identity" : "sqlite.swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/marcoarment/Blackbird",
+      "location" : "https://github.com/stephencelis/SQLite.swift",
       "state" : {
-        "branch" : "main",
-        "revision" : "e0de13ce5acfdc381063b5f35467d7330096f051"
+        "revision" : "392dd6058624d9f6c5b4c769d165ddd8c7293394",
+        "version" : "0.15.4"
+      }
+    },
+    {
+      "identity" : "swift-toolchain-sqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-toolchain-sqlite",
+      "state" : {
+        "revision" : "b626d3002773b1a1304166643e7f118f724b2132",
+        "version" : "1.0.4"
       }
     }
   ],
