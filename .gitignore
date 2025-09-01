@@ -67,3 +67,5 @@ fastlane/test_output
 *.db
 *.sqlite
 *.sqlite3
+*.sqlite-shm
+*.sqlite-wal
