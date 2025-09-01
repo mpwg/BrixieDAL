@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4095F7AE2E6563DD008A4284 /* BrixieDAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */; };
+		4095F7BE2E6563F9008A4284 /* Blackbird in Frameworks */ = {isa = PBXBuildFile; productRef = 4095F7BD2E6563F9008A4284 /* Blackbird */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4095F7BE2E6563F9008A4284 /* Blackbird in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +108,7 @@
 			);
 			name = BrixieDAL;
 			packageProductDependencies = (
+				4095F7BD2E6563F9008A4284 /* Blackbird */,
 			);
 			productName = BrixieDAL;
 			productReference = 4095F7A42E6563DD008A4284 /* BrixieDAL.framework */;
@@ -161,6 +164,9 @@
 			);
 			mainGroup = 4095F79A2E6563DD008A4284;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4095F7A52E6563DD008A4284 /* Products */;
 			projectDirPath = "";
@@ -508,6 +514,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marcoarment/Blackbird";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4095F7BD2E6563F9008A4284 /* Blackbird */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4095F7BC2E6563F9008A4284 /* XCRemoteSwiftPackageReference "Blackbird" */;
+			productName = Blackbird;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4095F79B2E6563DD008A4284 /* Project object */;
 }
