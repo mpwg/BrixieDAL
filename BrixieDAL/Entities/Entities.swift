@@ -58,6 +58,9 @@ public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, Tab
 		static let figNum = Column("fig_num")
 		static let quantity = Column("quantity")
 	}
+
+	// Composite primary key: inventory_id + fig_num
+	public static var primaryKey: [String] { ["inventory_id", "fig_num"] }
 }
 
 // MARK: - Inventory Parts
@@ -93,6 +96,9 @@ public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableR
 		guard let s = imgUrl, let url = URL(string: s) else { return nil }
 		return url
 	}
+
+	// Composite primary key: inventory_id + part_num + color_id
+	public static var primaryKey: [String] { ["inventory_id", "part_num", "color_id"] }
 }
 
 // MARK: - Inventory Sets
@@ -114,6 +120,9 @@ public struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRe
 		static let setNum = Column("set_num")
 		static let quantity = Column("quantity")
 	}
+
+	// Composite primary key: inventory_id + set_num
+	public static var primaryKey: [String] { ["inventory_id", "set_num"] }
 }
 
 // MARK: - Minifigs
@@ -138,6 +147,9 @@ public struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord 
 		static let numParts = Column("num_parts")
 		static let imgUrl = Column("img_url")
 	}
+
+	// Primary key: fig_num
+	public static var primaryKey: [String] { ["fig_num"] }
 
 	public var imgURL: URL? {
 		guard let s = imgUrl, let url = URL(string: s) else { return nil }
@@ -188,6 +200,9 @@ public struct PartRelationship: Codable, FetchableRecord, PersistableRecord, Tab
 		static let childPartNum = Column("child_part_num")
 		static let parentPartNum = Column("parent_part_num")
 	}
+
+	// Composite primary key: rel_type + child_part_num + parent_part_num
+	public static var primaryKey: [String] { ["rel_type", "child_part_num", "parent_part_num"] }
 }
 
 // MARK: - Parts
@@ -212,6 +227,9 @@ public struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
 		static let partCatId = Column("part_cat_id")
 		static let partMaterial = Column("part_material")
 	}
+
+	// Primary key: part_num
+	public static var primaryKey: [String] { ["part_num"] }
 }
 
 // MARK: - Elements
