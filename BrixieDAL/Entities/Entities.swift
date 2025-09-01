@@ -1,131 +1,342 @@
+
 import Foundation
-internal import GRDB
+import GRDB
 
-struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
-    static let databaseTableName = "colors"
+// Generated GRDB entities for Brix.sqlite
+// Each struct maps to a table in the database and conforms to
+// Codable + FetchableRecord + PersistableRecord so it can be used
+// with GRDB high-level APIs.
 
-    var id: Int64?
-    let name: String
-    let rgb: String
-    let isTrans: String
-    let numParts: Int
-    let numSets: Int
-    let y1: Int
-    let y2: Int
+// MARK: - Inventories
+public struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+	public static let databaseTableName = "inventories"
 
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
+	public var id: Int64?
+	public var version: Int64?
+	public var setNum: String?
+
+	enum CodingKeys: String, CodingKey {
+		case id, version
+		case setNum = "set_num"
+	}
+
+	enum Columns {
+		static let id = Column("id")
+		static let version = Column("version")
+		static let setNum = Column("set_num")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["id"] }
+
+	// Capture inserted rowID
+	public mutating func didInsert(with rowID: Int64, for column: String?) {
+		self.id = rowID
+	}
 }
 
-struct Element: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
-    static let databaseTableName = "elements"
+// MARK: - Inventory Minifigs
+public struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "inventory_minifigs"
 
-    var elementId: Int64?
-    let partNum: String
-    let colorId: Int64
-    let designId: Int
+	public var inventoryId: Int64?
+	public var figNum: String?
+	public var quantity: Int64?
 
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        elementId = inserted.rowID
-    }
+	enum CodingKeys: String, CodingKey {
+		case inventoryId = "inventory_id"
+		case figNum = "fig_num"
+		case quantity
+	}
+
+	enum Columns {
+		static let inventoryId = Column("inventory_id")
+		static let figNum = Column("fig_num")
+		static let quantity = Column("quantity")
+	}
 }
 
-struct Inventory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
-    static let databaseTableName = "inventory"
+// MARK: - Inventory Parts
+public struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "inventory_parts"
 
-    var id: Int64?
-    let version: Int
-    let setNum: String
+	public var inventoryId: Int64?
+	public var partNum: String?
+	public var colorId: Int64?
+	public var quantity: Int64?
+	public var isSpare: String?
+	public var imgUrl: String?
 
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
+	enum CodingKeys: String, CodingKey {
+		case inventoryId = "inventory_id"
+		case partNum = "part_num"
+		case colorId = "color_id"
+		case quantity
+		case isSpare = "is_spare"
+		case imgUrl = "img_url"
+	}
+
+	enum Columns {
+		static let inventoryId = Column("inventory_id")
+		static let partNum = Column("part_num")
+		static let colorId = Column("color_id")
+		static let quantity = Column("quantity")
+		static let isSpare = Column("is_spare")
+		static let imgUrl = Column("img_url")
+	}
 }
 
-struct InventoryMinifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "inventory_minifigs"
+// MARK: - Inventory Sets
+public struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "inventory_sets"
 
-    let inventoryId: Int64
-    let figNum: String
-    let quantity: Int
+	public var inventoryId: Int64?
+	public var setNum: String?
+	public var quantity: Int64?
+
+	enum CodingKeys: String, CodingKey {
+		case inventoryId = "inventory_id"
+		case setNum = "set_num"
+		case quantity
+	}
+
+	enum Columns {
+		static let inventoryId = Column("inventory_id")
+		static let setNum = Column("set_num")
+		static let quantity = Column("quantity")
+	}
 }
 
-struct InventoryPart: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "inventory_parts"
+// MARK: - Minifigs
+public struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "minifigs"
 
-    let inventoryId: Int64
-    let partNum: String
-    let colorId: Int64
-    let quantity: Int
-    let isSpare: String
-    let imgUrl: String
+	public var figNum: String?
+	public var name: String?
+	public var numParts: Int64?
+	public var imgUrl: String?
+
+	enum CodingKeys: String, CodingKey {
+		case figNum = "fig_num"
+		case name
+		case numParts = "num_parts"
+		case imgUrl = "img_url"
+	}
+
+	enum Columns {
+		static let figNum = Column("fig_num")
+		static let name = Column("name")
+		static let numParts = Column("num_parts")
+		static let imgUrl = Column("img_url")
+	}
 }
 
-struct InventorySet: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "inventory_sets"
+// MARK: - Part Categories
+public struct PartCategory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+	public static let databaseTableName = "part_categories"
 
-    let inventoryId: Int64
-    let setNum: String
-    let quantity: Int
+	public var id: Int64?
+	public var name: String?
+
+	enum CodingKeys: String, CodingKey {
+		case id, name
+	}
+
+	enum Columns {
+		static let id = Column("id")
+		static let name = Column("name")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["id"] }
+
+	public mutating func didInsert(with rowID: Int64, for column: String?) {
+		self.id = rowID
+	}
 }
 
-struct Minifig: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "minifigs"
+// MARK: - Part Relationships
+public struct PartRelationship: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "part_relationships"
 
-    let figNum: String
-    let name: String
-    let numParts: Int
-    let imgUrl: String
+	public var relType: String?
+	public var childPartNum: String?
+	public var parentPartNum: String?
+
+	enum CodingKeys: String, CodingKey {
+		case relType = "rel_type"
+		case childPartNum = "child_part_num"
+		case parentPartNum = "parent_part_num"
+	}
+
+	enum Columns {
+		static let relType = Column("rel_type")
+		static let childPartNum = Column("child_part_num")
+		static let parentPartNum = Column("parent_part_num")
+	}
 }
 
-struct PartCategory: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
-    static let databaseTableName = "part_categories"
+// MARK: - Parts
+public struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "parts"
 
-    var id: Int64?
-    let name: String
+	public var partNum: String?
+	public var name: String?
+	public var partCatId: Int64?
+	public var partMaterial: String?
 
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
+	enum CodingKeys: String, CodingKey {
+		case partNum = "part_num"
+		case name
+		case partCatId = "part_cat_id"
+		case partMaterial = "part_material"
+	}
+
+	enum Columns {
+		static let partNum = Column("part_num")
+		static let name = Column("name")
+		static let partCatId = Column("part_cat_id")
+		static let partMaterial = Column("part_material")
+	}
 }
 
-struct PartRelationship: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "part_relationships"
+// MARK: - Elements
+public struct Element: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+	public static let databaseTableName = "elements"
 
-    let relType: String
-    let childPartNum: String
-    let parentPartNum: String
+	public var elementId: Int64?
+	public var partNum: String?
+	public var colorId: Int64?
+	public var designId: Int64?
+
+	enum CodingKeys: String, CodingKey {
+		case elementId = "element_id"
+		case partNum = "part_num"
+		case colorId = "color_id"
+		case designId = "design_id"
+	}
+
+	enum Columns {
+		static let elementId = Column("element_id")
+		static let partNum = Column("part_num")
+		static let colorId = Column("color_id")
+		static let designId = Column("design_id")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["element_id"] }
+
+	public mutating func didInsert(with rowID: Int64, for column: String?) {
+		self.elementId = rowID
+	}
+
 }
 
-struct Part: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "parts"
+// MARK: - Colors
+public struct Color: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+	public static let databaseTableName = "colors"
 
-    let partNum: String
-    let name: String
-    let partCatId: Int64
-    let partMaterial: String
+	public var id: Int64?
+	public var name: String?
+	public var rgb: String?
+	public var isTrans: String?
+	public var numParts: Int64?
+	public var numSets: Int64?
+	public var y1: Int64?
+	public var y2: Int64?
+
+	enum CodingKeys: String, CodingKey {
+		case id, name, rgb
+		case isTrans = "is_trans"
+		case numParts = "num_parts"
+		case numSets = "num_sets"
+		case y1, y2
+	}
+
+	enum Columns {
+		static let id = Column("id")
+		static let name = Column("name")
+		static let rgb = Column("rgb")
+		static let isTrans = Column("is_trans")
+		static let numParts = Column("num_parts")
+		static let numSets = Column("num_sets")
+		static let y1 = Column("y1")
+		static let y2 = Column("y2")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["id"] }
+    
+	public mutating func didInsert(with rowID: Int64, for column: String?) {
+		self.id = rowID
+	}
 }
 
-struct Set: Codable, FetchableRecord, PersistableRecord, TableRecord {
-    static let databaseTableName = "sets"
+// MARK: - Sets (named LegoSet to avoid collision with Swift.Set)
+public struct LegoSet: Codable, FetchableRecord, PersistableRecord, TableRecord {
+	public static let databaseTableName = "sets"
 
-    let setNum: String
-    let name: String
-    let year: Int
-    let themeId: Int64
-    let numParts: Int
-    let imgUrl: String
+	public var setNum: String?
+	public var name: String?
+	public var year: Int64?
+	public var themeId: Int64?
+	public var numParts: Int64?
+	public var imgUrl: String?
+
+	enum CodingKeys: String, CodingKey {
+		case setNum = "set_num"
+		case name, year
+		case themeId = "theme_id"
+		case numParts = "num_parts"
+		case imgUrl = "img_url"
+	}
+
+	enum Columns {
+		static let setNum = Column("set_num")
+		static let name = Column("name")
+		static let year = Column("year")
+		static let themeId = Column("theme_id")
+		static let numParts = Column("num_parts")
+		static let imgUrl = Column("img_url")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["set_num"] }
 }
 
-struct Theme: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
-    static let databaseTableName = "themes"
+// MARK: - Themes
+public struct Theme: Codable, FetchableRecord, MutablePersistableRecord, TableRecord {
+	public static let databaseTableName = "themes"
 
-    var id: Int64?
-    let name: String
-    let parentId: Int64
+	public var id: Int64?
+	public var name: String?
+	public var parentId: Int64?
 
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
+	enum CodingKeys: String, CodingKey {
+		case id, name
+		case parentId = "parent_id"
+	}
+
+	enum Columns {
+		static let id = Column("id")
+		static let name = Column("name")
+		static let parentId = Column("parent_id")
+	}
+
+	// Primary key
+	public static var primaryKey: [String] { ["id"] }
+    
+	public mutating func didInsert(with rowID: Int64, for column: String?) {
+		self.id = rowID
+	}
+}
+
+// MARK: - Database helper
+public enum BrixDatabase {
+	/// Opens the database at the given path.
+	/// By default this uses the project's db path, but callers can provide
+	/// another path for tests or other environments.
+	public static func openQueue(at path: String = "/Users/mat/code/BrixieDAL/BrixieDAL/db/Brix.sqlite") throws -> DatabaseQueue {
+		return try DatabaseQueue(path: path)
+	}
 }
